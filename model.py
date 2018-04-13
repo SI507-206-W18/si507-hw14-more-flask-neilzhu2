@@ -26,15 +26,16 @@ def add_entry(name, text):
     now = datetime.now()
     time_string = now.strftime("%b %d, %Y %-I:%M %p")
 
-    if 'id' not in entries[0]:
-        next_id = 0
-        leng = len(entries) - 1
-        for e in entries:
-            if 'id' not in e:
-                e['id'] = str(leng - next_id)
-            next_id += 1
-    else:
-        next_id = int(entries[0]['id']) + 1
+    next_id = 0
+    if len(entries) > 0:
+        if 'id' not in entries[0]:
+            leng = len(entries) - 1
+            for e in entries:
+                if 'id' not in e:
+                    e['id'] = str(leng - next_id)
+                next_id += 1
+        else:
+            next_id = int(entries[0]['id']) + 1
 
     entry = {"author": name, "text": text, "timestamp": time_string, "id": str(next_id)}
     entries.insert(0, entry) ## add to front of list
